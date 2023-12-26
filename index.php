@@ -1,5 +1,15 @@
 <?php
-include('koneksi.php')
+session_start();
+include('koneksi.php');
+
+if (!isset($_SESSION['user_id'])) {
+?>
+    <script>
+        alert('Kamu belum login');
+        window.location.href = 'login.php';
+    </script>
+<?php
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +18,7 @@ include('koneksi.php')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Data Karyawan</title>
     <link rel="stylesheet" href="dist/output.css">
 </head>
 
@@ -19,7 +29,7 @@ include('koneksi.php')
             <a href="tambah.php" class="btn btn-primary">Tambah karyawan baru</a>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto mb-10">
             <table class="table">
                 <!-- head -->
                 <thead>
@@ -30,6 +40,7 @@ include('koneksi.php')
                         <th>Tempat Lahir</th>
                         <th>Alamat</th>
                         <th>Role</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,12 +56,22 @@ include('koneksi.php')
                             <td><?= $data['tempat_lahir'] ?></td>
                             <td><?= $data['alamat'] ?></td>
                             <td><?= $data['role'] ?></td>
+                            <td>
+                                <div class="flex gap-2">
+                                    <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="_action-karyawan.php?action=hapus&id_karyawan=<?= $data['id'] ?>" onclick="return confirm('Kamu Yakin ingin menghapus data ini?')" class="btn btn-error btn-sm">Hapus</a>
+                                </div>
+                            </td>
                         </tr>
                     <?php
                     }
                     ?>
                 </tbody>
             </table>
+        </div>
+
+        <div class="flex justify-center mt-10">
+            <a href="_action-logout.php" class="text-red-500 font-bold">Logout</a>
         </div>
     </div>
 </body>

@@ -17,6 +17,7 @@
         </div>
 
         <form action="_action-karyawan.php" method="post">
+            <input type="hidden" name="action" value="tambah">
             <div class="mb-3">
                 <label for="nama">Nama Karyawan</label>
                 <input type="text" name="nama" placeholder="Nama Karyawan" class="input input-bordered w-full" />
